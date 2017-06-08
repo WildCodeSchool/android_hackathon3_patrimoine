@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.octo.android.robospice.GsonGoogleHttpClientSpiceService;
 import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
@@ -22,6 +23,7 @@ import patrimoine.wcs.fr.toulousemonuments.models.Record;
 public class MainActivity extends AppCompatActivity {
 
     public static final String POSITION = "positon";
+    public static final String CACHE = "cache";
 
     private SpiceManager mSpiceManager;
     private ListView mListViewRecord;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private void performRequest() {
 
         MonumentRequest monumentRequest = new MonumentRequest();
-        mSpiceManager.execute(monumentRequest, new MonumentRequestListener());
+        mSpiceManager.execute(monumentRequest,MainActivity.CACHE, DurationInMillis.ONE_WEEK, new MainActivity.MonumentRequestListener());
     }
 
     private class MonumentRequestListener implements RequestListener<MonumentModel> {
