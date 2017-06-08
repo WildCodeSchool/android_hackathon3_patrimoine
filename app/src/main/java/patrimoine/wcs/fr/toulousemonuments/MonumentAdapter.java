@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,10 +67,11 @@ public class MonumentAdapter extends BaseAdapter {
         //sets the text for item name and item description from the current item object
 
         textViewForecastHour.setText(currentRecordItem.getFields().getNom());
-        if (currentRecordItem.getFields().getImgCdt() != null) {
-            String toto = currentRecordItem.getFields().getImgCdt().toString();
-        }
-        Glide.with(convertView).load(R.drawable.button_googlemap).into(imageViewListRecord);
+
+        Glide.with(convertView)
+                .setDefaultRequestOptions(RequestOptions.centerCropTransform())
+                .load(currentRecordItem.getFields().getImgCdt())
+                .into(imageViewListRecord);
 
         // returns the view for the current row
         return convertView;
