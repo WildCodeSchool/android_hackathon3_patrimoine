@@ -9,10 +9,11 @@
         android:id="@+id/textViewTitre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
-        android:text="CHAMPIONS BET"
-        android:textStyle="bold"
-        android:textSize="25dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="Toulouse Monumentàs"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
 </RelativeLayout>

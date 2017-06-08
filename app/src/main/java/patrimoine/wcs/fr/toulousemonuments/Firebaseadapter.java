@@ -174,6 +174,10 @@ abstract class Firebaseadapter<T> extends BaseAdapter {
         return view;
     }
 
+    public String getItemKey(int i){
+        return mKeys.get(i);
+    }
+
     /**
      * Each time the data at the given Firebase location changes, this method will be called for each item that needs
      * to be displayed. The arguments correspond to the mLayout and mModelClass given to the constructor of this class.
