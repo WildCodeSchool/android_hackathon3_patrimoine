@@ -53,8 +53,8 @@ public class CommentFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         Fields currentFields = mMonumentModel.getRecords().get(mPosition).getFields();
-        FirebaseApp.initializeApp(getContext());
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(currentFields.getIdCdt());
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mDatabaseReference.push().setValue("toto");
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +73,8 @@ public class CommentFragment extends BaseFragment {
                 dayDialog.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mDatabaseReference.push().setValue(input.toString());
+                        mDatabaseReference.push().setValue(input.getText().toString());
+                        String toto = input.getText().toString();
                         dialog.dismiss();
                     }
                 });
