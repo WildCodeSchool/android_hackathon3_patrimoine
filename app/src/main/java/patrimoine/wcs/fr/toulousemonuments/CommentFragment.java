@@ -14,9 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ListView;
 
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -54,14 +53,17 @@ public class CommentFragment extends BaseFragment {
 
         Fields currentFields = mMonumentModel.getRecords().get(mPosition).getFields();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        mDatabaseReference.push().setValue("toto");
+        CommentAdapter commentAdapter = new CommentAdapter(mDatabaseReference, String.class, R.layout.comment_item, getActivity());
+
+        ListView listViewComment = (ListView) getActivity().findViewById(R.id.listViewComment);
+        listViewComment.setAdapter(commentAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final AlertDialog.Builder dayDialog = new AlertDialog.Builder(getActivity());
-                dayDialog.setTitle("Choisis tes jours");
+                dayDialog.setTitle(getContext().getResources().getString(R.string.comment));
                 final EditText input = new EditText(getActivity());
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -70,7 +72,7 @@ public class CommentFragment extends BaseFragment {
                 dayDialog.setView(input);
 
 
-                dayDialog.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+                dayDialog.setPositiveButton(getContext().getResources().getString(R.string.validate), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mDatabaseReference.push().setValue(input.getText().toString());
@@ -79,7 +81,7 @@ public class CommentFragment extends BaseFragment {
                     }
                 });
 
-                dayDialog.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                dayDialog.setNegativeButton(getContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

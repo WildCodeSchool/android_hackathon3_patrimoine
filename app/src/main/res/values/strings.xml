@@ -2,6 +2,11 @@
     <string name="app_name">Toulouse Monumentàs</string>
     <string name="title_activity_maps">Map</string>
 
+    <string name="comment">Commentaire</string>
+    <string name="score">Score</string>
+    <string name="validate">Valider</string>
+    <string name="cancel">Annuler</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main2">MainActivity2</string>
