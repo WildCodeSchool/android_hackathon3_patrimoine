@@ -22,11 +22,11 @@ public class Fields {
     @Key
     private String precision;
     @Key
-    private List<Double> geoPoint2d = null;
+    private List<Double> geo_point_2d = null;
     @Key
     private String icone;
     @Key
-    private String idCdt;
+    private String id_cdt;
     @Key
     private String etiquette;
     @Key
@@ -40,7 +40,7 @@ public class Fields {
     @Key
     private Double id;
     @Key
-    private String imgCdt;
+    private String img_cdt;
     @Key
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -93,11 +93,11 @@ public class Fields {
     }
 
     public List<Double> getGeoPoint2d() {
-        return geoPoint2d;
+        return geo_point_2d;
     }
 
     public void setGeoPoint2d(List<Double> geoPoint2d) {
-        this.geoPoint2d = geoPoint2d;
+        this.geo_point_2d = geoPoint2d;
     }
 
     public String getIcone() {
@@ -109,11 +109,11 @@ public class Fields {
     }
 
     public String getIdCdt() {
-        return idCdt;
+        return id_cdt;
     }
 
     public void setIdCdt(String idCdt) {
-        this.idCdt = idCdt;
+        this.id_cdt = idCdt;
     }
 
     public String getEtiquette() {
@@ -165,11 +165,11 @@ public class Fields {
     }
 
     public String getImgCdt() {
-        return imgCdt;
+        return img_cdt;
     }
 
     public void setImgCdt(String imgCdt) {
-        this.imgCdt = imgCdt;
+        this.img_cdt = imgCdt;
     }
 
     public Map<String, Object> getAdditionalProperties() {

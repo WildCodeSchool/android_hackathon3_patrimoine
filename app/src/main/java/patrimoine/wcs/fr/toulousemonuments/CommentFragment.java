@@ -1,13 +1,23 @@
 package patrimoine.wcs.fr.toulousemonuments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import patrimoine.wcs.fr.toulousemonuments.models.Fields;
 import patrimoine.wcs.fr.toulousemonuments.models.MonumentModel;
@@ -15,6 +25,7 @@ import patrimoine.wcs.fr.toulousemonuments.models.MonumentModel;
 
 public class CommentFragment extends BaseFragment {
 
+    private DatabaseReference mDatabaseReference;
 
     public CommentFragment(int position, MonumentModel model) {
         super(position, model);
@@ -34,5 +45,53 @@ public class CommentFragment extends BaseFragment {
             return null;
         }
         return inflater.inflate(R.layout.fragment_comment, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Fields currentFields = mMonumentModel.getRecords().get(mPosition).getFields();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        CommentAdapter commentAdapter = new CommentAdapter(mDatabaseReference, String.class, R.layout.comment_item, getActivity());
+
+        ListView listViewComment = (ListView) getActivity().findViewById(R.id.listViewComment);
+        listViewComment.setAdapter(commentAdapter);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder dayDialog = new AlertDialog.Builder(getActivity());
+                dayDialog.setTitle(getContext().getResources().getString(R.string.comment));
+                final EditText input = new EditText(getActivity());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setLayoutParams(lp);
+                dayDialog.setView(input);
+
+
+                dayDialog.setPositiveButton(getContext().getResources().getString(R.string.validate), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mDatabaseReference.push().setValue(input.getText().toString());
+                        String toto = input.getText().toString();
+                        dialog.dismiss();
+                    }
+                });
+
+                dayDialog.setNegativeButton(getContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                }).show();
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 }
