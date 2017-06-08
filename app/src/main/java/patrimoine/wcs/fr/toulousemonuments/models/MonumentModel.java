@@ -1,16 +1,23 @@
 
 package patrimoine.wcs.fr.toulousemonuments.models;
 
+import com.google.api.client.util.Key;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MonumentModel {
 
+    @Key
     private Integer nhits;
+    @Key
     private Parameters parameters;
+    @Key
     private List<Record> records = null;
+    @Key
     private List<FacetGroup> facetGroups = null;
+    @Key
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Integer getNhits() {

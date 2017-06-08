@@ -1,15 +1,22 @@
 
 package patrimoine.wcs.fr.toulousemonuments.models;
 
+import com.google.api.client.util.Key;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Facet {
 
+    @Key
     private String name;
+    @Key
     private String path;
+    @Key
     private Integer count;
+    @Key
     private String state;
+    @Key
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getName() {

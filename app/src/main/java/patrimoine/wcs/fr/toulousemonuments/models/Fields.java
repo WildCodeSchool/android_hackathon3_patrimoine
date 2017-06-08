@@ -1,28 +1,47 @@
 
 package patrimoine.wcs.fr.toulousemonuments.models;
 
+import com.google.api.client.util.Key;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Fields {
 
+    @Key
     private String commune;
+    @Key
     private String descriptif;
+    @Key
     private String nomCdt;
+    @Key
     private String codePost;
+    @Key
     private String adresse;
+    @Key
     private String precision;
+    @Key
     private List<Double> geoPoint2d = null;
+    @Key
     private String icone;
+    @Key
     private String idCdt;
+    @Key
     private String etiquette;
+    @Key
     private String source;
+    @Key
     private String codeInsee;
+    @Key
     private GeoShape geoShape;
+    @Key
     private String nom;
+    @Key
     private Double id;
+    @Key
     private String imgCdt;
+    @Key
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getCommune() {

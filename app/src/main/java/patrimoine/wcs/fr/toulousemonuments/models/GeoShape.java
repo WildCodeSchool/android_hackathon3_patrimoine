@@ -1,14 +1,19 @@
 
 package patrimoine.wcs.fr.toulousemonuments.models;
 
+import com.google.api.client.util.Key;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class GeoShape {
 
+    @Key
     private String type;
+    @Key
     private List<Double> coordinates = null;
+    @Key
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getType() {

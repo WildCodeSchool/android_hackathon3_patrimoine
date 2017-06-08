@@ -1,13 +1,18 @@
 
 package patrimoine.wcs.fr.toulousemonuments.models;
 
+import com.google.api.client.util.Key;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Refine {
 
+    @Key
     private String icone;
+    @Key
     private String commune;
+    @Key
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getIcone() {
