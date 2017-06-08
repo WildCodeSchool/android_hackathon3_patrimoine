@@ -1,8 +1,10 @@
 package patrimoine.wcs.fr.toulousemonuments;
 
+import android.app.Dialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.octo.android.robospice.GsonGoogleHttpClientSpiceService;
 import com.octo.android.robospice.SpiceManager;
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         mSpiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
     }
+
 
     @Override
     protected void onStart() {
@@ -49,16 +52,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onRequestFailure(SpiceException e) {
             //update your UI
-            Log.d(TAG, e.getMessage());
+            //Log.d(TAG, e.getMessage());
         }
 
         @Override
         public void onRequestSuccess(MonumentModel monumentModel) {
 
-            ArrayList<Record> results = new ArrayList<>(monumentModel.getRecords());
+            /*ArrayList<Record> results = new ArrayList<>(monumentModel.getRecords());
             mWeatherAdapter = new WeatherAdapter(MainActivity.this, results);
             mListViewWeather.setAdapter(mWeatherAdapter);
-            Log.d(TAG, forecastWeatherModel.getCity().getName());
+            Log.d(TAG, forecastWeatherModel.getCity().getName());*/
 
         }
     }
