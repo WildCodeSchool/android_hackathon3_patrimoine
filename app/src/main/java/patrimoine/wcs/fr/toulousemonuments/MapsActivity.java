@@ -87,7 +87,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             protected void onPause() {
                 super.onPause();
                 mlocationManager.removeUpdates(mlocationListener);
-                mSpiceManager.shouldStop();
+                if (mSpiceManager.isStarted());
+                {
+                    mSpiceManager.shouldStop();
+                }
 
             }
             @Override
@@ -105,6 +108,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             protected void onStart() {
+                super.onStart();
 
                 if (ActivityCompat.checkSelfPermission(MapsActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this,
@@ -127,7 +131,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mlocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocationListener);
                 mlocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocationListener);
 
-                super.onStart();
                 mSpiceManager.start(this);
 
             }
