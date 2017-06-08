@@ -1,8 +1,13 @@
 package patrimoine.wcs.fr.toulousemonuments;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.octo.android.robospice.GsonGoogleHttpClientSpiceService;
 import com.octo.android.robospice.SpiceManager;
@@ -16,20 +21,36 @@ import patrimoine.wcs.fr.toulousemonuments.models.Record;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String POSITION = "positon";
+
     private SpiceManager mSpiceManager;
+    private ListView mListViewRecord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mListViewRecord = (ListView) findViewById(R.id.listViewRecord);
+        mListViewRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intentDescriptionActivity = new Intent(MainActivity.this, DescriptionActivity.class);
+                intentDescriptionActivity.putExtra(POSITION, position);
+                startActivity(intentDescriptionActivity);
+            }
+        });
+
         mSpiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
+
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mSpiceManager.start(this);
+        performRequest();
     }
 
     @Override
@@ -38,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         mSpiceManager.shouldStop();
     }
 
-    private void performRequest(String user) {
+    private void performRequest() {
 
         MonumentRequest monumentRequest = new MonumentRequest();
         mSpiceManager.execute(monumentRequest, new MonumentRequestListener());
@@ -46,19 +67,19 @@ public class MainActivity extends AppCompatActivity {
 
     private class MonumentRequestListener implements RequestListener<MonumentModel> {
 
+
         @Override
-        public void onRequestFailure(SpiceException e) {
-            //update your UI
-            Log.d(TAG, e.getMessage());
+        public void onRequestFailure(SpiceException spiceException) {
+
         }
 
         @Override
         public void onRequestSuccess(MonumentModel monumentModel) {
+            ArrayList<Record> recordArrayList = new ArrayList<>(monumentModel.getRecords());
+            MonumentAdapter monumentAdapter = new MonumentAdapter(MainActivity.this, recordArrayList);
+            mListViewRecord.setAdapter(monumentAdapter);
 
-            ArrayList<Record> results = new ArrayList<>(monumentModel.getRecords());
-            mWeatherAdapter = new WeatherAdapter(MainActivity.this, results);
-            mListViewWeather.setAdapter(mWeatherAdapter);
-            Log.d(TAG, forecastWeatherModel.getCity().getName());
+
 
         }
     }

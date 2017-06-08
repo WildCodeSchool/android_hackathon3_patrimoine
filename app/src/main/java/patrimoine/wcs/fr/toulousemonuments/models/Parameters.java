@@ -1,18 +1,27 @@
 
 package patrimoine.wcs.fr.toulousemonuments.models;
 
+import com.google.api.client.util.Key;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Parameters {
 
+    @Key
     private List<String> dataset = null;
+    @Key
     private Refine refine;
+    @Key
     private String timezone;
+    @Key
     private Integer rows;
+    @Key
     private String format;
+    @Key
     private List<String> facet = null;
+    @Key
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public List<String> getDataset() {

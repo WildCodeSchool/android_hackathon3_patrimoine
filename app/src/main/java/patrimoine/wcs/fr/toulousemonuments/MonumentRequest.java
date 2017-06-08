@@ -1,5 +1,7 @@
 package patrimoine.wcs.fr.toulousemonuments;
 
+import android.util.Log;
+
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.json.gson.GsonFactory;
 import com.octo.android.robospice.GsonGoogleHttpClientSpiceService;
@@ -28,6 +30,7 @@ public class MonumentRequest extends GoogleHttpClientSpiceRequest<MonumentModel>
                 .buildGetRequest(url).setParser(new GsonFactory().createJsonObjectParser())
                 .execute()
                 .parseAs(getResultType());
+        Log.d(TAG, "monuments loaded");
         return monumentModel;
     }
 }
