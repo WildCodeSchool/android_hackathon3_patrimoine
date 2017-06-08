@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private void performRequest() {
 
         MonumentRequest monumentRequest = new MonumentRequest();
-        mSpiceManager.execute(monumentRequest,MainActivity.CACHE, DurationInMillis.ONE_WEEK, new MainActivity.MonumentRequestListener());
+        mSpiceManager.execute(monumentRequest, MainActivity.CACHE, DurationInMillis.ONE_WEEK, new MainActivity.MonumentRequestListener());
     }
 
     private class MonumentRequestListener implements RequestListener<MonumentModel> {

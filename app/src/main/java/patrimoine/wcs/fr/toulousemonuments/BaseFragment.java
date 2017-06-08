@@ -1,6 +1,8 @@
 package patrimoine.wcs.fr.toulousemonuments;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.net.Uri;
 
 import patrimoine.wcs.fr.toulousemonuments.models.MonumentModel;
 
@@ -10,15 +12,12 @@ import patrimoine.wcs.fr.toulousemonuments.models.MonumentModel;
 
 public abstract class BaseFragment extends Fragment {
 
-    private MonumentModel mMonument;
-    private int mPosition;
+    protected int mPosition;
+    protected MonumentModel mMonumentModel;
 
 
-    public void setmMonument(MonumentModel mMonument) {
-        this.mMonument = mMonument;
-    }
-
-    public void setmPosition(int mPosition) {
+    public BaseFragment(int mPosition, MonumentModel mMonumentModel) {
         this.mPosition = mPosition;
+        this.mMonumentModel = mMonumentModel;
     }
 }

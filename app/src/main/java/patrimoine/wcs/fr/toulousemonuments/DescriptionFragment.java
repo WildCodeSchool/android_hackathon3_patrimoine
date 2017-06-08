@@ -8,67 +8,44 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import patrimoine.wcs.fr.toulousemonuments.models.Fields;
 import patrimoine.wcs.fr.toulousemonuments.models.MonumentModel;
 
 
 public class DescriptionFragment extends BaseFragment {
 
-    private OnFragmentInteractionListener mListener;
 
-    public DescriptionFragment() {
-        // Required empty public constructor
-    }
-
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public DescriptionFragment(int position, MonumentModel model) {
+        super(position, model);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(container == null){
+            return null;
+        }
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_desciption, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Fields currentFields = mMonumentModel.getRecords().get(mPosition).getFields();
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+        TextView textViewTitle = (TextView) getActivity().findViewById(R.id.textViewTitle);
+        ImageView imageViewDescriptionMain = (ImageView) getActivity().findViewById(R.id.imageViewDescriptionMain);
+        TextView textViewDescription = (TextView) getActivity().findViewById(R.id.textViewDescription);
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        textViewTitle.setText(currentFields.getNom());
+        textViewDescription.setText(currentFields.getDescriptif());
+        Glide.with(getContext()).load(currentFields.getImgCdt()).into(imageViewDescriptionMain);
     }
 }
