@@ -30,6 +30,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.android.gms:play-services-maps:10.2.6'
+    compile 'com.google.firebase:firebase-storage:10.2.6'
+    compile 'com.google.firebase:firebase-database:10.2.6'
+    compile 'com.google.firebase:firebase-core:10.2.6'
+
     testCompile 'junit:junit:4.12'
     compile 'com.octo.android.robospice:robospice:1.4.14'
     compile('com.octo.android.robospice:robospice-google-http-client:1.4.14') {
