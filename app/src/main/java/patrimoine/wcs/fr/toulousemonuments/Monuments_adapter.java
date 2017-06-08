@@ -15,5 +15,10 @@ public class Monuments_adapter extends Firebaseadapter <MonumentModel>{
     ImageView monuments;
 
 
+    public Monuments_adapter(Query ref, Activity activity, int layout) {
+        super(ref, MonumentModel.class, layout, activity);
+
+    }
+
 
 }
