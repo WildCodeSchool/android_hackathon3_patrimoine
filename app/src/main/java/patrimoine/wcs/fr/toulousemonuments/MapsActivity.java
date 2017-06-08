@@ -19,10 +19,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.octo.android.robospice.GsonGoogleHttpClientSpiceService;
 import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import java.util.Map;
+
+import patrimoine.wcs.fr.toulousemonuments.models.MonumentModel;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -31,6 +34,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationManager mlocationManager = null;
     private LocationListener mlocationListener;
     private SpiceManager mSpiceManager;
+    private int mPosition;
+    private MonumentModel mMonument;
+    private LatLng mLatLng;
 
 
     @Override
@@ -49,21 +55,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onLocationChanged(Location location) {
-                if( mlocationListener != null )
-                {
-                    mlocationListener.onLocationChanged( location );
+                if (mLatLng == null) {
+                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
 
-                    //Move the camera to the user's location and zoom in!
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12.0f));
                 }
-
-                location.getLongitude();
-                location.getLatitude();
-                permissionRequest();
-
-
-
-                Toast.makeText(getApplicationContext(), "Your Location is  \nLat: " + location.getLatitude() + "\nLong: " + location.getLongitude(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -91,7 +87,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             protected void onPause() {
                 super.onPause();
                 mlocationManager.removeUpdates(mlocationListener);
-                mSpiceManager.shouldStop();
+                if (mSpiceManager.isStarted());
+                {
+                    mSpiceManager.shouldStop();
+                }
 
             }
             @Override
@@ -109,6 +108,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             protected void onStart() {
+                super.onStart();
 
                 if (ActivityCompat.checkSelfPermission(MapsActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this,
@@ -131,10 +131,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mlocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocationListener);
                 mlocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocationListener);
 
-                super.onStart();
                 mSpiceManager.start(this);
-
-
 
             }
 
@@ -144,38 +141,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mlocationManager.removeUpdates(mlocationListener);
                 super.onStop();
             }
-    private void permissionRequest() {
-        MapsActivity.this.setProgressBarIndeterminateVisibility(true);
-        /*ForecastWeatherRequest forecastRequest = new ForecastWeatherRequest(latitude, longitude, apiKey);
-        spiceManager.execute(forecastRequest, new ForecastRequestListener());*/
 
-
-    }
 
 
 
 
 
     /**
-             * Manipulates the map once available.
-             * This callback is triggered when the map is ready to be used.
-             * This is where we can add markers or lines, add listeners or move the camera. In this case,
-             * we just add a marker near Sydney, Australia.
-             * If Google Play services is not installed on the device, the user will be prompted to install
-             * it inside the SupportMapFragment. This method will only be triggered once the user has
-             * installed Google Play services and returned to the app.
-             */
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                mMap = googleMap;
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
 
-                // Add a marker in Sydney and move the camera
-                LatLng toulouse = new LatLng(43.600000, 1.433333);
-                mMap.addMarker(new MarkerOptions().position(toulouse).title("Marker in Toulouse"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(toulouse));
-                mMap.getUiSettings().setZoomControlsEnabled(true);
-                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        // Add a marker in Sydney and move the camera
+        LatLng toulouse = new LatLng(43.600000, 1.433333);
+        mMap.addMarker(new MarkerOptions().position(toulouse).title("Marker in Toulouse"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(toulouse));
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        performRequest();
+    }
+
+    private void performRequest() {
+
+        MonumentRequest monumentRequest = new MonumentRequest();
+        mSpiceManager.execute(monumentRequest, MainActivity.CACHE, DurationInMillis.ONE_WEEK, new MapsActivity.MonumentRequestListener());
+    }
+
+    private class MonumentRequestListener implements RequestListener<MonumentModel> {
+
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+
+        }
+
+        @Override
+        public void onRequestSuccess(MonumentModel monument) {
+            mMonument = monument;
+            for (int i = 0; i < 20; i++){
+                Double lat = monument.getRecords().get(i).getFields().getGeoPoint2d().get(0);
+                Double lng = monument.getRecords().get(i).getFields().getGeoPoint2d().get(1);
+                LatLng marker = new LatLng(lat, lng);
+                mMap.addMarker(new MarkerOptions().position(marker).title("Marker in Toulouse"));
+
+
             }
-        };
+
+        }
+    }
+}
 
 
