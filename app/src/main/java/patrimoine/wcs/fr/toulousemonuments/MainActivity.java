@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.octo.android.robospice.GsonGoogleHttpClientSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String POSITION = "positon";
     public static final String CACHE = "cache";
-
+    private FirebaseDatabase firebaseDatabase;
     private SpiceManager mSpiceManager;
     private ListView mListViewRecord;
 
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.push().setValue("toto");
 
         mListViewRecord = (ListView) findViewById(R.id.listViewRecord);
         mListViewRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
