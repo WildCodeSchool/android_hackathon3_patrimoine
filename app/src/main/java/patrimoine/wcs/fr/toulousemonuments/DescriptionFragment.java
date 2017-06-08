@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +12,18 @@ import android.view.ViewGroup;
 import patrimoine.wcs.fr.toulousemonuments.models.MonumentModel;
 
 
-public class DesciptionFragment extends Fragment {
-
-    private MonumentModel mMonument;
-    private int mPosition;
+public class DescriptionFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public DesciptionFragment() {
+    public DescriptionFragment() {
         // Required empty public constructor
     }
 
 
-    public void onCreate(MonumentModel monument, int position) {
-        super.onCreate(null);
-        mMonument = monument;
-        mPosition = position;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
