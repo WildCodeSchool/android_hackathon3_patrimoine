@@ -1,16 +1,24 @@
 
 package patrimoine.wcs.fr.toulousemonuments.models;
 
+import com.google.api.client.util.Key;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Record {
 
+    @Key
     private String datasetid;
+    @Key
     private String recordid;
+    @Key
     private Fields fields;
+    @Key
     private Geometry geometry;
+    @Key
     private String recordTimestamp;
+    @Key
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getDatasetid() {
