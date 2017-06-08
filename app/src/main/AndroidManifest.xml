@@ -37,7 +37,6 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".MonumentListActivity" />
         <activity android:name=".DescriptionActivity" />
         <activity android:name=".PictureActivity" />
         <activity android:name=".CommentActivity"></activity>

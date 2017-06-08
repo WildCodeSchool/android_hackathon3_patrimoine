@@ -44,4 +44,5 @@ dependencies {
         exclude module: 'xpp3'
         exclude group: 'stax'
     }
+    compile 'com.android.support:design:25.3.1'
 }
