@@ -45,6 +45,7 @@
             android:name="com.octo.android.robospice.GsonGoogleHttpClientSpiceService"
             android:exported="false" />
 
+        <activity android:name=".Introduction"></activity>
     </application>
 
 </manifest>
