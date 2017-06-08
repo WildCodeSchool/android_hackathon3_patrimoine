@@ -18,7 +18,7 @@
 
 
         <TextView
-            android:id="@+id/textViewLieu"
+            android:id="@+id/textViewTitle"
             android:layout_width="0dp"
             android:layout_height="44dp"
             android:layout_marginBottom="530dp"
@@ -44,7 +44,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewLieu"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
             app:srcCompat="@drawable/button_googlemap" />
 
         <TextView
