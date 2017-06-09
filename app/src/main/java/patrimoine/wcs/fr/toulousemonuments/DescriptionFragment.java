@@ -115,19 +115,20 @@ public class DescriptionFragment extends BaseFragment {
         textViewTitle.setText(currentFields.getNom());
         textViewDescription.setText(currentFields.getDescriptif());
 
+        Glide.with(getContext())
+                .setDefaultRequestOptions(RequestOptions.centerCropTransform())
+                .load(currentFields.getImgCdt())
+                .into(imageViewDescriptionMain);
 
-        try {
+
+        /*try {
             AssetManager assetManager = getActivity().getAssets();
             InputStream inputStream = assetManager.open(currentFields.getNomCdt() + ".jpg", AssetManager.ACCESS_BUFFER);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             imageViewDescriptionMain.setImageBitmap(bitmap);
-            /*Glide.with(getContext())
-                    .setDefaultRequestOptions(RequestOptions.centerCropTransform())
-                    .asBitmap()
-                    .load(bitmap)
-                    .into(imageViewDescriptionMain);*/
+
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
