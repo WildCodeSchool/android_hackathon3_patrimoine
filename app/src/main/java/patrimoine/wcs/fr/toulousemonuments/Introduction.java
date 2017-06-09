@@ -1,39 +1,43 @@
 package patrimoine.wcs.fr.toulousemonuments;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Introduction extends AppCompatActivity {
+public class Introduction extends AppCompatActivity implements View.OnTouchListener{
 
-    ImageView imageViewTitreLogo;
-    TextView textViewDescription;
-    ImageView imageViewValidation;
+    private final int SPLASH_DISPLAY_LENGTH = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_introduction);
 
-        imageViewTitreLogo = (ImageView) findViewById(R.id.imageViewTitreLogo);
-        textViewDescription = (TextView) findViewById(R.id.textViewDescription);
-        imageViewValidation = (ImageView) findViewById(R.id.imageViewValidation);
-
-        imageViewValidation.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.constraintLayoutIntroduction).setOnTouchListener(this);
+        /*new Handler().postDelayed(new Runnable(){
             @Override
-            public void onClick(View v) {
-                Intent mainIntent = new Intent(Introduction.this,MainActivity.class);
-                Introduction.this.startActivity(mainIntent);
+            public void run() {
+                Intent mainIntent = new Intent(Introduction.this, MainActivity.class);
+                startActivity(mainIntent);
                 Introduction.this.finish();
             }
-        });
+        }, SPLASH_DISPLAY_LENGTH);*/
 
 
     }
 
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        Intent mainIntent = new Intent(Introduction.this, MainActivity.class);
+        startActivity(mainIntent);
+        Introduction.this.finish();
+        return false;
+    }
 }
