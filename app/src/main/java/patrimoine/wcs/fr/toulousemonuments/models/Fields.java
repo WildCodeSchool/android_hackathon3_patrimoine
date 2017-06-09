@@ -14,7 +14,7 @@ public class Fields {
     @Key
     private String descriptif;
     @Key
-    private String nomCdt;
+    private String nom_cdt;
     @Key
     private String codePost;
     @Key
@@ -61,11 +61,11 @@ public class Fields {
     }
 
     public String getNomCdt() {
-        return nomCdt;
+        return nom_cdt;
     }
 
     public void setNomCdt(String nomCdt) {
-        this.nomCdt = nomCdt;
+        this.nom_cdt = nomCdt;
     }
 
     public String getCodePost() {
