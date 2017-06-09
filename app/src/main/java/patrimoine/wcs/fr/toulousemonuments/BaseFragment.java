@@ -1,5 +1,6 @@
 package patrimoine.wcs.fr.toulousemonuments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
@@ -19,5 +20,10 @@ public abstract class BaseFragment extends Fragment {
     public BaseFragment(int mPosition, MonumentModel mMonumentModel) {
         this.mPosition = mPosition;
         this.mMonumentModel = mMonumentModel;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 }
