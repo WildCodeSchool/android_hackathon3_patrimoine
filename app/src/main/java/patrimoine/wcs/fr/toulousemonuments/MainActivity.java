@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -29,13 +30,20 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private SpiceManager mSpiceManager;
     private ListView mListViewRecord;
+    private ImageButton mImageButtonToMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.push().setValue("toto");
+
+        mImageButtonToMap = (ImageButton) findViewById(R.id.imageButtonToMap);
+        mImageButtonToMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MapsActivity.class));
+            }
+        });
 
         mListViewRecord = (ListView) findViewById(R.id.listViewRecord);
         mListViewRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,8 +24,7 @@ public class DescriptionActivity extends AppCompatActivity {
     private ImageView mImageViewDescriptionMain;
     private TextView mTextViewDescription;
     private TextView mTextviewScore;
-    private ImageView mImageViewEtoile;
-    private ImageView mImageViewEtoileScore;
+    private ImageButton mImageButtonRating;
 
     private SpiceManager mSpiceManager;
     private int mPosition;
@@ -42,8 +42,7 @@ public class DescriptionActivity extends AppCompatActivity {
         mTextViewDescription = (TextView) findViewById(R.id.textViewDescription);
         mTextviewScore = (TextView) findViewById(R.id.textViewScore);
         mImageViewDescriptionMain = (ImageView) findViewById(R.id.imageViewDescriptionMain);
-        mImageViewEtoile = (ImageView) findViewById(R.id.imageViewMonEtoile);
-        mImageViewEtoileScore = (ImageView) findViewById(R.id.imageViewRating);
+        mImageButtonRating = (ImageButton) findViewById(R.id.imageButtonRating);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

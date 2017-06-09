@@ -2,6 +2,7 @@ package patrimoine.wcs.fr.toulousemonuments;
 
 import android.*;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.location.Location;
@@ -16,7 +17,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.octo.android.robospice.GsonGoogleHttpClientSpiceService;
 import com.octo.android.robospice.SpiceManager;
@@ -29,7 +32,7 @@ import java.util.Map;
 
 import patrimoine.wcs.fr.toulousemonuments.models.MonumentModel;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
     private GoogleMap mMap;
@@ -57,11 +60,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onLocationChanged(Location location) {
-                if (mLatLng == null) {
-                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
-
-                }
+                    mLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 12.0f));
             }
 
             @Override
@@ -89,10 +89,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             protected void onPause() {
                 super.onPause();
                 mlocationManager.removeUpdates(mlocationListener);
-                if (mSpiceManager.isStarted());
-                {
-                    mSpiceManager.shouldStop();
-                }
 
             }
             @Override
@@ -139,9 +135,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             protected void onStop() {
-
-                mlocationManager.removeUpdates(mlocationListener);
                 super.onStop();
+                if (mSpiceManager.isStarted());
+                {
+                    mSpiceManager.shouldStop();
+                }
             }
 
 
@@ -161,8 +159,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(this);
 
-        // Add a marker in Sydney and move the camera
         LatLng toulouse = new LatLng(43.600000, 1.433333);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(toulouse));
         mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -177,6 +175,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mSpiceManager.execute(monumentRequest, MainActivity.CACHE, DurationInMillis.ONE_WEEK, new MapsActivity.MonumentRequestListener());
     }
 
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        for (int i = 0; i < 20; i++){
+            String monumentID = mMonument.getRecords().get(i).getFields().getNomCdt();
+            if(marker.getTitle().equals(monumentID)){
+                Intent intentToDescriptionActivity = new Intent(MapsActivity.this, DescriptionActivity.class);
+                intentToDescriptionActivity.putExtra(MainActivity.POSITION, i);
+                startActivity(intentToDescriptionActivity);
+            }
+        }
+        return false;
+    }
+
     private class MonumentRequestListener implements RequestListener<MonumentModel> {
 
 
@@ -189,13 +200,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         public void onRequestSuccess(MonumentModel monument) {
             mMonument = monument;
             for (int i = 0; i < 20; i++){
-                Double lat = monument.getRecords().get(i).getFields().getGeoPoint2d().get(0);
-                Double lng = monument.getRecords().get(i).getFields().getGeoPoint2d().get(1);
-                LatLng marker = new LatLng(lat, lng);
-                mMap.addMarker(new MarkerOptions().position(marker).title("Marker in Toulouse"));
+                String nameId = mMonument.getRecords().get(i).getFields().getNomCdt();
+                LatLng latLng = new LatLng(
+                        monument.getRecords().get(i).getFields().getGeoPoint2d().get(0),
+                        monument.getRecords().get(i).getFields().getGeoPoint2d().get(1)
+                );
 
-
+                Marker currentMarker = mMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title(nameId));
+                if (nameId.equals("LA BASILIQUE SAINT-SERNIN")){
+                    currentMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                }
+                else currentMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
             }
+
+            Marker currentMarker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(43.611378086546445d, 1.420810441929067d))
+                    .title("Le canal du midi"));
+            currentMarker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+
 
         }
     }
