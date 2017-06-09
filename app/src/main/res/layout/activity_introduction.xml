@@ -13,7 +13,7 @@
         android:id="@+id/textViewDescri"
         android:layout_width="324dp"
         android:layout_height="192dp"
-        android:layout_marginBottom="114dp"
+        android:layout_marginBottom="188dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -41,6 +41,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logorose" />
 
+
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="251dp"
@@ -56,5 +57,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="0dp"
         app:layout_constraintVertical_bias="1.0" />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="344dp"
+        android:layout_height="117dp"
+        app:srcCompat="@mipmap/pinklogo"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="26dp" />
 
 </android.support.constraint.ConstraintLayout>
