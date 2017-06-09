@@ -76,7 +76,12 @@ public class MonumentAdapter extends BaseAdapter {
         //sets the text for item name and item description from the current item object
 
         textViewForecastHour.setText(currentRecordItem.getFields().getNom());
-        new ImageDownloadTask(mImageViewListRecord).execute(currentRecordItem.getFields().getNomCdt());
+        if (currentRecordItem.getRecordid().equals("2d2dbd9934460646ae619839d30e58b19c28b261")){
+            new ImageDownloadTask(mImageViewListRecord).execute("HOTEL HUGUES DE BOISSON JEAN DE CHEVERRY");
+        }
+        else {
+            new ImageDownloadTask(mImageViewListRecord).execute(currentRecordItem.getFields().getNomCdt());
+        }
 
         return convertView;
     }
