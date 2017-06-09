@@ -3,6 +3,7 @@ package patrimoine.wcs.fr.toulousemonuments;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ public class DescriptionActivity extends AppCompatActivity {
     private SpiceManager mSpiceManager;
     private int mPosition;
     private MonumentModel mMonument;
+    private boolean isNavigationDescriptionSelected = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +51,16 @@ public class DescriptionActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.navigation_description:
+                        isNavigationDescriptionSelected = true;
                         DescriptionFragment desciptionFragment = new DescriptionFragment(mPosition, mMonument);
                         loadFragment(desciptionFragment);
                         return true;
                     case R.id.navigation_picture:
+                        isNavigationDescriptionSelected = false;
+                        loadFragment(AddPhotos.newInstance());
                         return true;
                     case R.id.navigation_comment:
+                        isNavigationDescriptionSelected = false;
                         CommentFragment commentFragment = new CommentFragment(mPosition, mMonument);
                         loadFragment(commentFragment);
                         return true;
@@ -100,8 +106,11 @@ public class DescriptionActivity extends AppCompatActivity {
         @Override
         public void onRequestSuccess(MonumentModel monument) {
             mMonument = monument;
-            DescriptionFragment desciptionFragment = new DescriptionFragment(mPosition, mMonument);
-            loadFragment(desciptionFragment);
+            if(isNavigationDescriptionSelected) {
+
+                DescriptionFragment desciptionFragment = new DescriptionFragment(mPosition, mMonument);
+                loadFragment(desciptionFragment);
+            }
 
         }
     }

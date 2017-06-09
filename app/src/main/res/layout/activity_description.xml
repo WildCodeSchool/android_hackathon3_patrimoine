@@ -22,6 +22,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
+
+        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/white"
+        app:itemBackground="@color/black"
+
         app:menu="@menu/navigation" />
 
 </LinearLayout>
