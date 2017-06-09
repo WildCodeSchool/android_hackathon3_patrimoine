@@ -1,6 +1,7 @@
 package patrimoine.wcs.fr.toulousemonuments;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import java.io.IOException;
 
 import patrimoine.wcs.fr.toulousemonuments.models.Fields;
 import patrimoine.wcs.fr.toulousemonuments.models.MonumentModel;
@@ -46,6 +49,14 @@ public class DescriptionFragment extends BaseFragment {
 
         textViewTitle.setText(currentFields.getNom());
         textViewDescription.setText(currentFields.getDescriptif());
-        Glide.with(getContext()).load(currentFields.getImgCdt()).into(imageViewDescriptionMain);
+
+        AssetManager assetManager = getActivity().getAssets();
+        try {
+            Glide.with(getContext())
+                    .load(assetManager.open(currentFields.getNomCdt()))
+                    .into(imageViewDescriptionMain);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

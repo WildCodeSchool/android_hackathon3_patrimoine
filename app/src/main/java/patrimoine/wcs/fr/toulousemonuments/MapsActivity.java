@@ -3,6 +3,7 @@ package patrimoine.wcs.fr.toulousemonuments;
 import android.*;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,6 +24,7 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+import java.io.InputStream;
 import java.util.Map;
 
 import patrimoine.wcs.fr.toulousemonuments.models.MonumentModel;
@@ -162,11 +164,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera
         LatLng toulouse = new LatLng(43.600000, 1.433333);
-        mMap.addMarker(new MarkerOptions().position(toulouse).title("Marker in Toulouse"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(toulouse));
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         performRequest();
+
     }
 
     private void performRequest() {
