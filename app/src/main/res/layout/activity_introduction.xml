@@ -4,44 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bckgrd"
     tools:context="patrimoine.wcs.fr.toulousemonuments.Introduction">
 
     <TextView
         android:id="@+id/textViewDescri"
-        android:layout_width="354dp"
-        android:layout_height="302dp"
-        android:layout_marginBottom="195dp"
+        android:layout_width="374dp"
+        android:layout_height="300dp"
+        android:layout_marginBottom="71dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:textColor="@color/white"
+        android:textStyle="italic"
+        android:foregroundGravity="center_horizontal"
         android:text="gezgjorzi zjgrozgjtrojejgttrj ret grthtr  rth rt r hgrhr  rijihirj rijtorjhjr rjoij i oij itjrjhrej orehjtrehre errtretretertret"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewTitreLogo" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/imageViewTitreLogo"
-        android:layout_width="352dp"
-        android:layout_height="93dp"
-        app:srcCompat="@drawable/ic_home"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="5dp" />
-
-    <ImageView
-        android:id="@+id/imageViewValidation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescri"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/nom_logo" />
+
+    <ImageView
+        android:id="@+id/imageViewValidation"
+        android:layout_width="57dp"
+        android:layout_height="37dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/plus_icon"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintTop_toTopOf="@+id/imageViewTitreLogo"
+        android:layout_marginTop="506dp" />
 
 </android.support.constraint.ConstraintLayout>
