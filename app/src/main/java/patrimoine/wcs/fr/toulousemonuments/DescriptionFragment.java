@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,7 +49,7 @@ public class DescriptionFragment extends BaseFragment {
     private ImageView imageViewDescriptionMain;
     private TextView textViewDescription;
     private TextView textViewScore;
-    private ImageButton mImageButtonRating;
+    private ImageView mImageButtonRating;
 
     private Integer mId = null;
     private ArrayList<Integer> mLike = new ArrayList<>();
@@ -84,7 +85,7 @@ public class DescriptionFragment extends BaseFragment {
         imageViewDescriptionMain = (ImageView) getActivity().findViewById(R.id.imageViewDescriptionMain);
         textViewDescription = (TextView) getActivity().findViewById(R.id.textViewDescription);
         textViewScore = (TextView) getActivity().findViewById(R.id.textViewScore);
-        mImageButtonRating = (ImageButton) getActivity().findViewById(R.id.imageButtonRating);
+        mImageButtonRating = (ImageView) getActivity().findViewById(R.id.imageButtonRating);
 
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -95,7 +96,7 @@ public class DescriptionFragment extends BaseFragment {
                     for (DataSnapshot data : dataSnapshot.child(ID).getChildren()){
                         mLike.add(data.getValue(Integer.class));
                         if (data.getValue(Integer.class).equals(mId)){
-                            mImageButtonRating.setImageDrawable(getContext().getResources().getDrawable(R.drawable.chat_icon));
+                            Glide.with(getContext()).load(R.drawable.fullheart).into(mImageButtonRating);
                         }
                     }
                 }
