@@ -52,7 +52,7 @@ public class CommentFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         Fields currentFields = mMonumentModel.getRecords().get(mPosition).getFields();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(currentFields.getNomCdt());
         CommentAdapter commentAdapter = new CommentAdapter(mDatabaseReference, String.class, R.layout.comment_item, getActivity());
 
         ListView listViewComment = (ListView) getActivity().findViewById(R.id.listViewComment);
@@ -76,7 +76,6 @@ public class CommentFragment extends BaseFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mDatabaseReference.push().setValue(input.getText().toString());
-                        String toto = input.getText().toString();
                         dialog.dismiss();
                     }
                 });
@@ -89,8 +88,6 @@ public class CommentFragment extends BaseFragment {
 
                     }
                 }).show();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
     }
