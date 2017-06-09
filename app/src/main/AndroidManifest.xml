@@ -3,9 +3,10 @@
     package="patrimoine.wcs.fr.toulousemonuments">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -14,12 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity android:name=".SplashScreenActivity">
-        <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!--
@@ -38,12 +39,12 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".DescriptionActivity" />
-        <activity android:name=".PictureActivity" />
-        <activity android:name=".CommentActivity"></activity>
-        <service android:name="com.octo.android.robospice.GsonGoogleHttpClientSpiceService"
-            android:exported="false"></service>
 
-        
+        <service
+            android:name="com.octo.android.robospice.GsonGoogleHttpClientSpiceService"
+            android:exported="false" />
+
+        <activity android:name=".Introduction" />
     </application>
 
 </manifest>

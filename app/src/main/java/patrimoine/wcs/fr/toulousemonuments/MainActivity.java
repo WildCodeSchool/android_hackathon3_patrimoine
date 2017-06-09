@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.octo.android.robospice.GsonGoogleHttpClientSpiceService;
 import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
@@ -22,14 +26,24 @@ import patrimoine.wcs.fr.toulousemonuments.models.Record;
 public class MainActivity extends AppCompatActivity {
 
     public static final String POSITION = "positon";
-
+    public static final String CACHE = "cache";
+    private FirebaseDatabase firebaseDatabase;
     private SpiceManager mSpiceManager;
     private ListView mListViewRecord;
+    private ImageButton mImageButtonToMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mImageButtonToMap = (ImageButton) findViewById(R.id.imageButtonToMap);
+        mImageButtonToMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MapsActivity.class));
+            }
+        });
 
         mListViewRecord = (ListView) findViewById(R.id.listViewRecord);
         mListViewRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -63,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private void performRequest() {
 
         MonumentRequest monumentRequest = new MonumentRequest();
-        mSpiceManager.execute(monumentRequest, new MonumentRequestListener());
+        mSpiceManager.execute(monumentRequest, MainActivity.CACHE, DurationInMillis.ONE_WEEK, new MainActivity.MonumentRequestListener());
     }
 
     private class MonumentRequestListener implements RequestListener<MonumentModel> {
