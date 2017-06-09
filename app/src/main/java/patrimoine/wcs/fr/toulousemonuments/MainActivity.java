@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.push().setValue("toto");
 
         mImageButtonToMap = (ImageButton) findViewById(R.id.imageButtonToMap);
         mImageButtonToMap.setOnClickListener(new View.OnClickListener() {

@@ -52,7 +52,10 @@ public class CommentFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         Fields currentFields = mMonumentModel.getRecords().get(mPosition).getFields();
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(currentFields.getNomCdt());
+        mDatabaseReference = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(currentFields.getNomCdt())
+                .child(getContext().getString(R.string.comment));
         CommentAdapter commentAdapter = new CommentAdapter(mDatabaseReference, String.class, R.layout.comment_item, getActivity());
 
         ListView listViewComment = (ListView) getActivity().findViewById(R.id.listViewComment);

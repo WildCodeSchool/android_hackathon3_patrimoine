@@ -1,6 +1,9 @@
 package patrimoine.wcs.fr.toulousemonuments;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -68,10 +73,19 @@ public class MonumentAdapter extends BaseAdapter {
 
         textViewForecastHour.setText(currentRecordItem.getFields().getNom());
 
-        Glide.with(convertView)
-                .setDefaultRequestOptions(RequestOptions.centerCropTransform())
-                .load(currentRecordItem.getFields().getImgCdt())
-                .into(imageViewListRecord);
+        try {
+            AssetManager assetManager = context.getAssets();
+            InputStream inputStream = assetManager.open(currentRecordItem.getFields().getNomCdt() + ".jpg", AssetManager.ACCESS_BUFFER);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            imageViewListRecord.setImageBitmap(bitmap);
+            /*Glide.with(getContext())
+                    .setDefaultRequestOptions(RequestOptions.centerCropTransform())
+                    .asBitmap()
+                    .load(bitmap)
+                    .into(imageViewDescriptionMain);*/
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // returns the view for the current row
         return convertView;
