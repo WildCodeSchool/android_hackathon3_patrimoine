@@ -78,19 +78,6 @@ public class MonumentAdapter extends BaseAdapter {
         textViewForecastHour.setText(currentRecordItem.getFields().getNom());
         new ImageDownloadTask(mImageViewListRecord).execute(currentRecordItem.getFields().getNomCdt());
 
-
-        /*try {
-
-
-            imageViewListRecord.setImageBitmap(bitmap);
-            AssetManager assetManager = context.getAssets();
-            InputStream inputStream = assetManager.open( + ".jpg", AssetManager.ACCESS_BUFFER);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-        // returns the view for the current row
         return convertView;
     }
 
@@ -100,7 +87,7 @@ public class MonumentAdapter extends BaseAdapter {
             Bitmap bitmap = null;
             AssetManager assetManager = context.getAssets();
             try {
-                InputStream inputStream = assetManager.open( params + ".jpg", AssetManager.ACCESS_BUFFER);
+                InputStream inputStream = assetManager.open( params[0] + ".jpg", AssetManager.ACCESS_BUFFER);
                 bitmap = BitmapFactory.decodeStream(inputStream);
             } catch (IOException e) {
                 e.printStackTrace();
