@@ -25,6 +25,8 @@ import patrimoine.wcs.fr.toulousemonuments.models.MonumentModel;
 
 public class CommentFragment extends BaseFragment {
 
+    public static final String COMMENT = "comment";
+
     private DatabaseReference mDatabaseReference;
 
     public CommentFragment(int position, MonumentModel model) {
@@ -55,7 +57,7 @@ public class CommentFragment extends BaseFragment {
         mDatabaseReference = FirebaseDatabase.getInstance()
                 .getReference()
                 .child(currentFields.getNomCdt())
-                .child(getContext().getString(R.string.comment));
+                .child(COMMENT);
         CommentAdapter commentAdapter = new CommentAdapter(mDatabaseReference, String.class, R.layout.comment_item, getActivity());
 
         ListView listViewComment = (ListView) getActivity().findViewById(R.id.listViewComment);
