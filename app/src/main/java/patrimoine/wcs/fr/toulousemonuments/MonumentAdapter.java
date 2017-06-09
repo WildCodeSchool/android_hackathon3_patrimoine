@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -31,6 +34,7 @@ public class MonumentAdapter extends BaseAdapter {
     public static final double KELVIN = 273.15;
     private Context context; //context
     private ArrayList<Record> items; //data source of the list adapter
+    private ImageView mImageViewListRecord;
 
     //public constructor
     public MonumentAdapter(Context context, ArrayList<Record> items) {
@@ -67,28 +71,51 @@ public class MonumentAdapter extends BaseAdapter {
         // get the TextView for item name and item description
         TextView textViewForecastHour = (TextView)
                 convertView.findViewById(R.id.textViewListRecord);
-        ImageView imageViewListRecord = (ImageView) convertView.findViewById(R.id.imageViewListRecord);
+        mImageViewListRecord = (ImageView) convertView.findViewById(R.id.imageViewListRecord);
 
         //sets the text for item name and item description from the current item object
 
         textViewForecastHour.setText(currentRecordItem.getFields().getNom());
+        new ImageDownloadTask(mImageViewListRecord).execute(currentRecordItem.getFields().getNomCdt());
 
-        try {
-            AssetManager assetManager = context.getAssets();
-            InputStream inputStream = assetManager.open(currentRecordItem.getFields().getNomCdt() + ".jpg", AssetManager.ACCESS_BUFFER);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+        /*try {
+
+
             imageViewListRecord.setImageBitmap(bitmap);
-            /*Glide.with(getContext())
-                    .setDefaultRequestOptions(RequestOptions.centerCropTransform())
-                    .asBitmap()
-                    .load(bitmap)
-                    .into(imageViewDescriptionMain);*/
+            AssetManager assetManager = context.getAssets();
+            InputStream inputStream = assetManager.open( + ".jpg", AssetManager.ACCESS_BUFFER);
+
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         // returns the view for the current row
         return convertView;
+    }
+
+    private class ImageDownloadTask extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            Bitmap bitmap = null;
+            AssetManager assetManager = context.getAssets();
+            try {
+                InputStream inputStream = assetManager.open( params + ".jpg", AssetManager.ACCESS_BUFFER);
+                bitmap = BitmapFactory.decodeStream(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bitmap;
+        }
+        public ImageDownloadTask(ImageView iv){
+            mImageViewListRecord = iv;
+        }
+        @Override
+        protected void onPostExecute(Bitmap bitmap){
+            super.onPostExecute(bitmap);
+            mImageViewListRecord.setImageBitmap(bitmap);
+        }
     }
 
 
