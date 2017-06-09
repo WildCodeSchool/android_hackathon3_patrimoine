@@ -122,41 +122,55 @@ public class DescriptionFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 final DatabaseReference child = mDatabaseReference.child(ID);
-                if (mLike.size() == 0){
-
-                    child.push().setValue(mId);
-                }
-                else if( mLike.size() <= 5){
-                    child.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot data: dataSnapshot.getChildren()){
-                                if (!data.getValue(Integer.class).equals(mId)){
-                                    child.push().setValue(mId);
+                child.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() == null){
+                            child.push().setValue(mId);
+                            mDatabaseReference.child(SCORE).runTransaction(new Transaction.Handler() {
+                                @Override
+                                public Transaction.Result doTransaction(MutableData mutableData) {
+                                    if (mutableData.getValue() == null) {
+                                        mutableData.setValue(1);
+                                        return Transaction.success(mutableData);
+                                    }
+                                    int value = mutableData.getValue(Integer.class);
+                                    mutableData.setValue(value + 1);
+                                    return Transaction.success(mutableData);
                                 }
+
+                                @Override
+                                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+
+                                }
+                            });
+                        }
+                        for(DataSnapshot data: dataSnapshot.getChildren()){
+                            if (!data.getValue(Integer.class).equals(mId)){
+                                child.push().setValue(mId);
+                                mDatabaseReference.child(SCORE).runTransaction(new Transaction.Handler() {
+                                    @Override
+                                    public Transaction.Result doTransaction(MutableData mutableData) {
+                                        if (mutableData.getValue() == null) {
+                                            mutableData.setValue(1);
+                                            return Transaction.success(mutableData);
+                                        }
+                                        int value = mutableData.getValue(Integer.class);
+                                        mutableData.setValue(value + 1);
+                                        return Transaction.success(mutableData);
+                                    }
+
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+
+                                    }
+                                });
                             }
                         }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-                mDatabaseReference.child(SCORE).runTransaction(new Transaction.Handler() {
-                    @Override
-                    public Transaction.Result doTransaction(MutableData mutableData) {
-                        if (mutableData.getValue() == null){
-                            mutableData.setValue(1);
-                            return Transaction.success(mutableData);
-                        }
-                        int value = mutableData.getValue(Integer.class);
-                        mutableData.setValue(value + 1);
-                        return Transaction.success(mutableData);
                     }
 
                     @Override
-                    public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                    public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
