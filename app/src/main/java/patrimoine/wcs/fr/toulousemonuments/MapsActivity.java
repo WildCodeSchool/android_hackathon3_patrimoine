@@ -36,12 +36,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
     private GoogleMap mMap;
-    private LocationManager mlocationManager = null;
-    private LocationListener mlocationListener;
     private SpiceManager mSpiceManager;
-    private int mPosition;
     private MonumentModel mMonument;
-    private LatLng mLatLng;
 
 
     @Override
@@ -53,43 +49,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mSpiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
-
-        mlocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        mlocationListener = new LocationListener() {
-
-
-            @Override
-            public void onLocationChanged(Location location) {
-                mLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 12.0f));
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-
-            }
-
-        };
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mlocationManager.removeUpdates(mlocationListener);
-
     }
 
     @Override
@@ -100,8 +59,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mlocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocationListener);
-        mlocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocationListener);
     }
 
 
@@ -127,8 +84,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mlocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mlocationListener);
-        mlocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mlocationListener);
 
         mSpiceManager.start(this);
 
